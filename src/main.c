@@ -5,7 +5,7 @@
 
 #include "../include/randist.h"
 
-#define MAX_SIZE 10000
+#define MAX_SIZE 1000
 
 double normal_probdist(double x) {
     return (1 / sqrt(2 * M_PI)) * exp(-(x * x / 2));
@@ -29,7 +29,7 @@ int main() {
     pcg32_random_t rng;
     pcg32_srandom_r(&rng, 42u, 52u);
     
-    randist(array, MAX_SIZE, &rng, -50.0, 50.0, laplace_probdist);
+    randist(array, MAX_SIZE, &rng, -50, 50, normal_probdist);
     FILE *fp = fopen("samples.txt", "w");
     if (fp == NULL) {
         perror("fopen");
