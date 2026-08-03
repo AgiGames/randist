@@ -1,0 +1,24 @@
+CC = gcc
+
+PCG_DIR = /home/agi/c-libs/pcg-c-0.94
+
+CFLAGS = -Wall -O2 \
+          -Iinclude \
+          -I$(PCG_DIR)/include
+
+LDFLAGS = -L$(PCG_DIR)/src
+LDLIBS = -lpcg_random -lm
+
+SRC = $(filter-out src/main.c,$(wildcard src/*.c))
+OBJ = $(SRC:.c=.o)
+
+all: librandist.so
+
+librandist.so: $(OBJ)
+	$(CC) -shared -o $@ $(OBJ) $(LDFLAGS) $(LDLIBS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -DBUILD_MYLIB -c $< -o $@
+
+clean:
+	rm -f $(OBJ) librandist.so

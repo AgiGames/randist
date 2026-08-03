@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "randist.h"
+#include "../include/randist.h"
 
 #define MAX_SIZE 10000
 
@@ -28,9 +28,13 @@ int main() {
     
     pcg32_random_t rng;
     pcg32_srandom_r(&rng, 42u, 52u);
-
+    
     randist(array, MAX_SIZE, &rng, -50.0, 50.0, laplace_probdist);
     FILE *fp = fopen("samples.txt", "w");
+    if (fp == NULL) {
+        perror("fopen");
+        return 1;
+    }
 
     for (size_t i = 0; i < MAX_SIZE; ++i) {
         fprintf(fp, "%lf", array[i]);

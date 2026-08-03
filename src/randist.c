@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "randist.h"
+#include "../include/randist.h"
 
 double rand_uniform(pcg32_random_t* rng, double low, double high) {
     return (high - low) * ldexp((double)pcg32_random_r(rng), -32) + low;
@@ -46,6 +46,7 @@ void randist(double* array, size_t size,
     if (probdist == NULL) {
         randist_uniform(array, size, rng, x_low, x_high);
     }
+    
 
     double y_max = find_maxima(x_low, x_high, probdist);
     size_t i = 0;

@@ -1,0 +1,25 @@
+CC = gcc
+
+PCG_DIR = /home/agi/c-libs/pcg-c-0.94
+
+CFLAGS = -g \
+          -I$(PCG_DIR)/include \
+          -Iinclude
+
+LDFLAGS = -L$(PCG_DIR)/src \
+           -L. \
+           -Wl,-rpath,'$$ORIGIN'
+
+LDLIBS = -lpcg_random -lm -lrandist
+
+TARGET = rng
+SRCS = src/main.c
+
+$(TARGET): $(SRCS)
+	$(CC) $(SRCS) $(CFLAGS) $(LDFLAGS) $(LDLIBS) -o $@
+
+run: $(TARGET)
+	./$(TARGET)
+
+clean:
+	rm -f $(TARGET)
